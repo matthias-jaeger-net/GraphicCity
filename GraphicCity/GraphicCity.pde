@@ -1,14 +1,15 @@
 void setup() {
   // Set a square canvas
   size(800, 800, P3D);
-  
-  lights();
+
+  rotateX(PI/6);
 
   // Clear background 
   background(255);
-  
-  noStroke();
-  
+
+  // Translate to the center  
+  translate(width/2, height/2);
+
   // Left plane of the clipping volume
   float left = - width / 2; 
   // Right plane of the clipping volume
@@ -17,17 +18,6 @@ void setup() {
   float bottom = -height/2;
   // Top plane of the clipping volume
   float top = height / 2;
- 
-  // Set camera mode to ortho    
-  //ortho(left, right, bottom, top); 
-
-  // Translate to the center  
-  translate(width/2, height/2);
-
-  // Architectural look rotation
-  // TODO doesnt work well
-  //rotateX(degrees(45));
-  //rotateZ(degrees(-45));
 
   // Set the density of the grid
   float dens = 50;
@@ -38,18 +28,21 @@ void setup() {
       // Calculate the positions
       float x = i;
       float y = j;
-      // Translate to the position
-      pushMatrix();
-      translate(x, y);
+
       // Weighted random house
-      float w = random(70);
-      float l = random(50);
-      float h = random(90);
-      box(w, l, h);
-      popMatrix();
+      float r = random(1);
+      if (r < 0.5) {
+        pushMatrix();
+        translate(x, y);
+        float w = random(5, 70);
+        float l = random(5, 50);
+        float h = random(5, 90);
+        box(w, l, h);
+        popMatrix();
+      }
     }
   }
-  
+
 
   // Save output
   save("jpg/city.jpg");
